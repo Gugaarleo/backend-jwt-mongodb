@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+  # MongoDB
+  mongodb:
+    image: mongo:7
+    container_name: auth-api-mongodb
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_DATABASE: auth-db
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - auth-network
+
+  # API Node.js
+  api:
+    build: .
+    container_name: auth-api
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      PORT: 3000
+      MONGODB_URI: mongodb://mongodb:27017/auth-db
+      JWT_SECRET: ${JWT_SECRET:-dev_secret_key_change_in_production_123456789}
+      JWT_EXPIRES_IN: ${JWT_EXPIRES_IN:-7d}
+      NODE_ENV: ${NODE_ENV:-development}
+    depends_on:
+      - mongodb
+    networks:
+      - auth-network
+    volumes:
+      - ./src:/app/src
+      - /app/node_modules
+
+volumes:
+  mongodb_data:
+    driver: local
+
+networks:
+  auth-network:
+    driver: bridge

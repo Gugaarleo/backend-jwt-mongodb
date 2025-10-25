@@ -1,0 +1,218 @@
+_type: export
+__export_format: 4
+__export_date: 2025-10-25T00:00:00.000Z
+__export_source: insomnia.desktop.app:v2023.5.8
+resources:
+  - _id: req_register_success
+    parentId: fld_auth
+    type: request
+    name: 1. Cadastro bem-sucedido
+    method: POST
+    url: "{{ _.base_url }}/register"
+    body:
+      mimeType: application/json
+      text: |
+        {
+          "name": "João Silva",
+          "email": "joao.silva@email.com",
+          "password": "senha123"
+        }
+    headers:
+      - name: Content-Type
+        value: application/json
+
+  - _id: req_register_duplicate_email
+    parentId: fld_auth
+    type: request
+    name: 2. Cadastro - E-mail repetido
+    method: POST
+    url: "{{ _.base_url }}/register"
+    body:
+      mimeType: application/json
+      text: |
+        {
+          "name": "Maria Santos",
+          "email": "joao.silva@email.com",
+          "password": "senha456"
+        }
+    headers:
+      - name: Content-Type
+        value: application/json
+
+  - _id: req_register_invalid_password
+    parentId: fld_auth
+    type: request
+    name: 3. Cadastro - Senha inválida (muito curta)
+    method: POST
+    url: "{{ _.base_url }}/register"
+    body:
+      mimeType: application/json
+      text: |
+        {
+          "name": "Pedro Costa",
+          "email": "pedro.costa@email.com",
+          "password": "123"
+        }
+    headers:
+      - name: Content-Type
+        value: application/json
+
+  - _id: req_register_invalid_email
+    parentId: fld_auth
+    type: request
+    name: 4. Cadastro - E-mail inválido
+    method: POST
+    url: "{{ _.base_url }}/register"
+    body:
+      mimeType: application/json
+      text: |
+        {
+          "name": "Ana Paula",
+          "email": "email_invalido",
+          "password": "senha123"
+        }
+    headers:
+      - name: Content-Type
+        value: application/json
+
+  - _id: req_register_malformed
+    parentId: fld_auth
+    type: request
+    name: 5. Cadastro - Requisição mal formatada
+    method: POST
+    url: "{{ _.base_url }}/register"
+    body:
+      mimeType: application/json
+      text: |
+        {
+          "name": 123,
+          "email": true,
+          "password": ["senha123"]
+        }
+    headers:
+      - name: Content-Type
+        value: application/json
+
+  - _id: req_login_success
+    parentId: fld_auth
+    type: request
+    name: 6. Login bem-sucedido
+    method: POST
+    url: "{{ _.base_url }}/login"
+    body:
+      mimeType: application/json
+      text: |
+        {
+          "email": "joao.silva@email.com",
+          "password": "senha123"
+        }
+    headers:
+      - name: Content-Type
+        value: application/json
+
+  - _id: req_login_invalid_password
+    parentId: fld_auth
+    type: request
+    name: 7. Login - Senha inválida
+    method: POST
+    url: "{{ _.base_url }}/login"
+    body:
+      mimeType: application/json
+      text: |
+        {
+          "email": "joao.silva@email.com",
+          "password": "senhaErrada"
+        }
+    headers:
+      - name: Content-Type
+        value: application/json
+
+  - _id: req_login_invalid_email
+    parentId: fld_auth
+    type: request
+    name: 8. Login - E-mail inválido
+    method: POST
+    url: "{{ _.base_url }}/login"
+    body:
+      mimeType: application/json
+      text: |
+        {
+          "email": "email_invalido",
+          "password": "senha123"
+        }
+    headers:
+      - name: Content-Type
+        value: application/json
+
+  - _id: req_login_malformed
+    parentId: fld_auth
+    type: request
+    name: 9. Login - Requisição mal formatada
+    method: POST
+    url: "{{ _.base_url }}/login"
+    body:
+      mimeType: application/json
+      text: |
+        {
+          "email": 12345,
+          "password": null
+        }
+    headers:
+      - name: Content-Type
+        value: application/json
+
+  - _id: req_protected_valid_token
+    parentId: fld_protected
+    type: request
+    name: 10. Acesso /protected com token válido
+    method: GET
+    url: "{{ _.base_url }}/protected"
+    headers:
+      - name: Authorization
+        value: "Bearer {{ _.token }}"
+    description: |
+      IMPORTANTE: Execute primeiro a requisição "6. Login bem-sucedido" 
+      e copie o token retornado para a variável de ambiente "token"
+
+  - _id: req_protected_no_token
+    parentId: fld_protected
+    type: request
+    name: 11. Acesso /protected sem token
+    method: GET
+    url: "{{ _.base_url }}/protected"
+
+  - _id: req_protected_invalid_token
+    parentId: fld_protected
+    type: request
+    name: 12. Acesso /protected com token inválido
+    method: GET
+    url: "{{ _.base_url }}/protected"
+    headers:
+      - name: Authorization
+        value: "Bearer token_invalido_123456"
+
+  # Folders
+  - _id: fld_auth
+    type: request_group
+    name: Autenticação
+    description: Rotas públicas de registro e login
+
+  - _id: fld_protected
+    type: request_group
+    name: Rotas Protegidas
+    description: Rotas que requerem autenticação JWT
+
+  # Environment
+  - _id: env_base
+    type: environment
+    name: Base Environment
+    data:
+      base_url: http://localhost:3000
+      token: ""
+
+  - _id: env_production
+    type: environment
+    name: Production
+    data:
+      base_url: https://sua-api.vercel.app
+      token: ""
