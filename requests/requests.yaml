@@ -216,3 +216,11 @@ resources:
     data:
       base_url: https://sua-api.vercel.app
       token: ""
+
+  # Environment Vercel
+  - _id: env_vercel
+    type: environment
+    name: Vercel Production
+    data:
+      base_url: https://sua-api.vercel.app/api
+      token: ""
