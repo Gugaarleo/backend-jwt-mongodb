@@ -9,6 +9,7 @@ API RESTful completa com autenticação JWT, desenvolvida com Node.js, TypeScrip
 - Registro de novos usuários com hash de senha (bcrypt)
 - Login com geração de token JWT
 - Rotas protegidas com validação de token
+- CRUD completo de To-do list (tarefas) protegido por JWT
 - Validações de email e senha
 - Logs detalhados de operações
 - Tratamento de erros apropriado
@@ -176,6 +177,65 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
   "userId": "507f1f77bcf86cd799439011"
 }
 ```
+
+### To-dos (CRUD protegido)
+
+Recurso: `/todos`
+
+Headers obrigatórios em todas as rotas abaixo:
+
+```
+Authorization: Bearer <seu_token_jwt>
+Content-Type: application/json
+```
+
+1) POST /todos — criar tarefa
+
+Body mínimo:
+```json
+{
+  "title": "Comprar leite",
+  "description": "Integral, 1L",
+  "dueDate": "2025-10-30T15:00:00.000Z",
+  "completed": false,
+  "priority": "high"
+}
+```
+
+Resposta 201:
+```json
+{ "success": true, "data": { "_id": "...", "title": "...", "user": "...", "completed": false, "priority": "medium", "createdAt": "...", "updatedAt": "..." } }
+```
+
+2) GET /todos — listar tarefas do usuário autenticado (com filtros opcionais)
+
+Query params suportados: `completed=true|false`, `priority=low|medium|high`, `title=<substring>`, `dueFrom=<ISO>`, `dueTo=<ISO>`
+
+Exemplo: `/todos?completed=false&priority=high&title=compra&dueFrom=2025-10-01`
+
+Resposta 200:
+```json
+{ "success": true, "data": [ { "_id": "...", "title": "..." } ] }
+```
+
+3) GET /todos/:id — detalhe da tarefa
+
+Resposta 200, 404 (não encontrado) ou 403 (acesso a recurso de outro usuário).
+
+4) PUT /todos/:id — substitui todos os campos principais
+
+Body obrigatório:
+```json
+{ "title": "string", "completed": true, "priority": "low", "description": "string", "dueDate": "2025-10-30T15:00:00.000Z" }
+```
+
+5) PATCH /todos/:id — atualização parcial
+
+Body com qualquer subconjunto dos campos acima.
+
+6) DELETE /todos/:id — remove a tarefa (204 sem corpo)
+
+Respostas padronizadas: 400 (requisição inválida), 401 (sem token), 403 (sem permissão), 404 (não encontrado), 500 (erro interno).
 
 ## Testando a API
 

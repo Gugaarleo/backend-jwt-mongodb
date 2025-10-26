@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import database from './database/connection';
 import authRoutes from './routes/authRoutes';
 import protectedRoutes from './routes/protectedRoutes';
+import todoRoutes from './routes/todoRoutes';
 
 // Carrega as variáveis de ambiente
 dotenv.config();
@@ -53,6 +54,9 @@ class App {
 
     // Rotas protegidas
     this.app.use('/', protectedRoutes);
+
+  // Rotas de To-dos (protegidas)
+  this.app.use('/', todoRoutes);
 
     // Rota 404 - Not Found
     this.app.use((req: Request, res: Response) => {

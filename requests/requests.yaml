@@ -191,6 +191,200 @@ resources:
       - name: Authorization
         value: "Bearer token_invalido_123456"
 
+  - _id: req_todos_create
+    parentId: fld_todos
+    type: request
+    name: 13. Todos - Criar tarefa
+    method: POST
+    url: "{{ _.base_url }}/todos"
+    body:
+      mimeType: application/json
+      text: |
+        {
+          "title": "Comprar leite",
+          "description": "Integral, 1L",
+          "priority": "high",
+          "completed": false
+        }
+    headers:
+      - name: Content-Type
+        value: application/json
+      - name: Authorization
+        value: "Bearer {{ _.token }}"
+
+  - _id: req_todos_list
+    parentId: fld_todos
+    type: request
+    name: 14. Todos - Listar
+    method: GET
+    url: "{{ _.base_url }}/todos"
+    headers:
+      - name: Authorization
+        value: "Bearer {{ _.token }}"
+
+  - _id: req_todos_list_filtered
+    parentId: fld_todos
+    type: request
+    name: 15. Todos - Listar filtrado
+    method: GET
+    url: "{{ _.base_url }}/todos?completed=false&priority=high&title=compra"
+    headers:
+      - name: Authorization
+        value: "Bearer {{ _.token }}"
+
+  - _id: req_todos_get_by_id
+    parentId: fld_todos
+    type: request
+    name: 16. Todos - Buscar por ID
+    method: GET
+    url: "{{ _.base_url }}/todos/{{ _.todo_id }}"
+    headers:
+      - name: Authorization
+        value: "Bearer {{ _.token }}"
+
+  - _id: req_todos_put
+    parentId: fld_todos
+    type: request
+    name: 17. Todos - Atualizar (PUT)
+    method: PUT
+    url: "{{ _.base_url }}/todos/{{ _.todo_id }}"
+    body:
+      mimeType: application/json
+      text: |
+        {
+          "title": "Comprar pão e leite",
+          "description": "Pão francês e leite sem lactose",
+          "completed": true,
+          "priority": "medium",
+          "dueDate": null
+        }
+    headers:
+      - name: Content-Type
+        value: application/json
+      - name: Authorization
+        value: "Bearer {{ _.token }}"
+
+  - _id: req_todos_patch
+    parentId: fld_todos
+    type: request
+    name: 18. Todos - Atualizar (PATCH)
+    method: PATCH
+    url: "{{ _.base_url }}/todos/{{ _.todo_id }}"
+    body:
+      mimeType: application/json
+      text: |
+        {
+          "completed": false
+        }
+    headers:
+      - name: Content-Type
+        value: application/json
+      - name: Authorization
+        value: "Bearer {{ _.token }}"
+
+  - _id: req_todos_delete
+    parentId: fld_todos
+    type: request
+    name: 19. Todos - Remover
+    method: DELETE
+    url: "{{ _.base_url }}/todos/{{ _.todo_id }}"
+    headers:
+      - name: Authorization
+        value: "Bearer {{ _.token }}"
+
+  # ===== Erros específicos de To-dos =====
+  - _id: req_todos_create_no_token
+    parentId: fld_todos
+    type: request
+    name: 20. Todos - Criar SEM token (401)
+    method: POST
+    url: "{{ _.base_url }}/todos"
+    body:
+      mimeType: application/json
+      text: |
+        {
+          "title": "Tarefa sem token"
+        }
+    headers:
+      - name: Content-Type
+        value: application/json
+
+  - _id: req_todos_create_invalid_token
+    parentId: fld_todos
+    type: request
+    name: 21. Todos - Criar com token INVÁLIDO (401)
+    method: POST
+    url: "{{ _.base_url }}/todos"
+    body:
+      mimeType: application/json
+      text: |
+        {
+          "title": "Tarefa com token inválido"
+        }
+    headers:
+      - name: Content-Type
+        value: application/json
+      - name: Authorization
+        value: "Bearer token_invalido_123456"
+
+  - _id: req_todos_list_no_token
+    parentId: fld_todos
+    type: request
+    name: 22. Todos - Listar SEM token (401)
+    method: GET
+    url: "{{ _.base_url }}/todos"
+
+  - _id: req_todos_get_other_user_forbidden
+    parentId: fld_todos
+    type: request
+    name: 23. Todos - Acesso de OUTRO usuário (403)
+    method: GET
+    url: "{{ _.base_url }}/todos/{{ _.other_user_todo_id }}"
+    headers:
+      - name: Authorization
+        value: "Bearer {{ _.token }}"
+    description: |
+      Simulação de acesso indevido: defina a variável "other_user_todo_id" com o ID
+      de uma tarefa criada sob OUTRA conta/usuário (outro token). A resposta deve ser 403 Forbidden.
+
+  - _id: req_todos_create_malformed
+    parentId: fld_todos
+    type: request
+    name: 24. Todos - Criar MAL FORMATADO (400)
+    method: POST
+    url: "{{ _.base_url }}/todos"
+    body:
+      mimeType: application/json
+      text: |
+        {
+          "title": 12345
+        }
+    headers:
+      - name: Content-Type
+        value: application/json
+      - name: Authorization
+        value: "Bearer {{ _.token }}"
+
+  - _id: req_todos_put_malformed
+    parentId: fld_todos
+    type: request
+    name: 25. Todos - PUT MAL FORMATADO (400)
+    method: PUT
+    url: "{{ _.base_url }}/todos/{{ _.todo_id }}"
+    body:
+      mimeType: application/json
+      text: |
+        {
+          "title": 999,
+          "completed": "sim",
+          "priority": 42
+        }
+    headers:
+      - name: Content-Type
+        value: application/json
+      - name: Authorization
+        value: "Bearer {{ _.token }}"
+
   # Folders
   - _id: fld_auth
     type: request_group
@@ -202,6 +396,11 @@ resources:
     name: Rotas Protegidas
     description: Rotas que requerem autenticação JWT
 
+  - _id: fld_todos
+    type: request_group
+    name: To-dos
+    description: CRUD completo de tarefas (protegido por JWT)
+
   # Environment
   - _id: env_base
     type: environment
@@ -209,6 +408,8 @@ resources:
     data:
       base_url: http://localhost:3000
       token: ""
+      todo_id: ""
+      other_user_todo_id: ""
 
   - _id: env_production
     type: environment
