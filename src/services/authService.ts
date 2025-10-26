@@ -82,15 +82,12 @@ class AuthService {
       // Cria o usuário
       const user = await User.create({ name, email, password });
 
-      // Gera o token
-      const token = this.generateToken(user.id);
 
       console.log(`✅ Usuário registrado com sucesso: ${email}`);
 
       return {
         success: true,
         message: 'Usuário registrado com sucesso',
-        token,
         user: {
           id: user.id,
           name: user.name,
