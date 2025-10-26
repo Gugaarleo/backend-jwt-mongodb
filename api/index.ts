@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 import authRoutes from '../src/routes/authRoutes';
 import protectedRoutes from '../src/routes/protectedRoutes';
+import todoRoutes from '../src/routes/todoRoutes';
 
 dotenv.config();
 
@@ -61,6 +62,7 @@ app.get('/api', (req, res) => {
 
 app.use('/api', authRoutes);
 app.use('/api', protectedRoutes);
+app.use('/api', todoRoutes);
 
 // 404
 app.use((req, res) => {
