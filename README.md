@@ -2,7 +2,9 @@
 
 API RESTful completa com autenticação JWT, desenvolvida com Node.js, TypeScript, Express e MongoDB, seguindo a arquitetura de camadas (controllers, services, models, routes, middlewares).
 
-## Link do vídeo de demonstração no YouTube: https://youtu.be/ht48nmZeRqg
+## Link do vídeo de demonstração no YouTube parte I: https://youtu.be/ht48nmZeRqg
+
+## Link do vídeo de demonstração no YouTube parte II: https://youtu.be/iI2Nt1p01Lk
 
 ## Funcionalidades
 
