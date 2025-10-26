@@ -1,19 +1,21 @@
-# 🔐 API de Autenticação com Node.js, TypeScript, Express e MongoDB
+# API de Autenticação com Node.js, TypeScript, Express e MongoDB
 
 API RESTful completa com autenticação JWT, desenvolvida com Node.js, TypeScript, Express e MongoDB, seguindo a arquitetura de camadas (controllers, services, models, routes, middlewares).
 
-## 📋 Funcionalidades
+## Link do vídeo de demonstração no YouTube: https://youtu.be/ht48nmZeRqg
 
-- ✅ Registro de novos usuários com hash de senha (bcrypt)
-- ✅ Login com geração de token JWT
-- ✅ Rotas protegidas com validação de token
-- ✅ Validações de email e senha
-- ✅ Logs detalhados de operações
-- ✅ Tratamento de erros apropriado
-- ✅ Suporte para Docker
-- ✅ Pronto para deploy na Vercel
+## Funcionalidades
 
-## 🏗️ Arquitetura
+- Registro de novos usuários com hash de senha (bcrypt)
+- Login com geração de token JWT
+- Rotas protegidas com validação de token
+- Validações de email e senha
+- Logs detalhados de operações
+- Tratamento de erros apropriado
+- Suporte para Docker
+- Pronto para deploy na Vercel
+
+## Arquitetura
 
 ```
 src/
@@ -26,27 +28,21 @@ src/
 └── index.ts          # Arquivo principal da aplicação
 ```
 
-## 🚀 Tecnologias Utilizadas
+## Tecnologias Utilizadas
 
-- **Node.js** - Runtime JavaScript
-- **TypeScript** - Superset tipado do JavaScript
-- **Express** - Framework web
-- **MongoDB** - Banco de dados NoSQL
-- **Mongoose** - ODM para MongoDB
-- **JWT (jsonwebtoken)** - Autenticação via tokens
-- **bcrypt** - Hash de senhas
-- **dotenv** - Gerenciamento de variáveis de ambiente
-- **Docker** - Containerização
+- Node.js - Runtime JavaScript
+- TypeScript - Superset tipado do JavaScript
+- Express - Framework web
+- MongoDB - Banco de dados NoSQL
+- Mongoose - ODM para MongoDB
+- JWT (jsonwebtoken) - Autenticação via tokens
+- bcrypt - Hash de senhas
+- dotenv - Gerenciamento de variáveis de ambiente
+- Docker - Containerização
 
-## 📦 Instalação e Execução
+## Instalação e Execução
 
-### Pré-requisitos
-
-- Node.js 20+ instalado
-- Docker e Docker Compose (para execução com Docker)
-- MongoDB Atlas (para produção) ou MongoDB local
-
-### 1️⃣ Executando Localmente (sem Docker)
+### Executando Localmente (sem Docker)
 
 ```bash
 # 1. Instale as dependências
@@ -64,7 +60,7 @@ npm run build
 npm start
 ```
 
-### 2️⃣ Executando com Docker
+### Executando com Docker
 
 ```bash
 # 1. Configure as variáveis de ambiente (opcional, usa valores padrão)
@@ -85,7 +81,7 @@ docker-compose up --build
 
 A API estará disponível em `http://localhost:3000`
 
-## 🔧 Variáveis de Ambiente
+## Variáveis de Ambiente
 
 Crie um arquivo `.env` na raiz do projeto:
 
@@ -108,7 +104,7 @@ JWT_EXPIRES_IN=7d
 NODE_ENV=development
 ```
 
-## 📡 Endpoints da API
+## Endpoints da API
 
 ### Rotas Públicas
 
@@ -181,7 +177,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
 }
 ```
 
-## 🧪 Testando a API
+## Testando a API
 
 ### Usando Insomnia/Postman
 
@@ -191,29 +187,29 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
 
 ### Casos de Teste Incluídos
 
-✅ Cadastro bem-sucedido  
-✅ Cadastro com e-mail repetido  
-✅ Cadastro com senha inválida  
-✅ Cadastro com e-mail inválido  
-✅ Cadastro com requisição mal formatada  
-✅ Login bem-sucedido  
-✅ Login com senha inválida  
-✅ Login com e-mail inválido  
-✅ Login com requisição mal formatada  
-✅ Acesso a /protected com token válido  
-✅ Acesso a /protected sem token  
-✅ Acesso a /protected com token inválido  
+Cadastro bem-sucedido  
+Cadastro com e-mail repetido  
+Cadastro com senha inválida  
+Cadastro com e-mail inválido  
+Cadastro com requisição mal formatada  
+Login bem-sucedido  
+Login com senha inválida  
+Login com e-mail inválido  
+Login com requisição mal formatada  
+Acesso a /protected com token válido  
+Acesso a /protected sem token  
+Acesso a /protected com token inválido  
 
-## 🌐 Deploy
+## Deploy
 
-### Deploy na Vercel
+### Deploy no Vercel
 
-1. **Configure o MongoDB Atlas:**
+1. Configure o MongoDB Atlas:
    - Crie uma conta no [MongoDB Atlas](https://www.mongodb.com/cloud/atlas)
    - Crie um cluster gratuito
    - Obtenha a string de conexão
 
-2. **Configure as variáveis de ambiente na Vercel:**
+2. Configure as variáveis de ambiente na Vercel:
    ```
    MONGODB_URI=mongodb+srv://usuario:senha@cluster.mongodb.net/auth-db
    JWT_SECRET=sua_chave_super_secreta_de_producao
@@ -221,7 +217,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
    NODE_ENV=production
    ```
 
-3. **Faça o build e deploy:**
+3. Faça o build e deploy:
    ```bash
    # Instale a CLI da Vercel
    npm i -g vercel
@@ -236,7 +232,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
    vercel --prod
    ```
 
-4. **Configuração automática via Git:**
+4. Configuração automática via Git:
    - Conecte seu repositório GitHub à Vercel
    - A cada push, a Vercel fará o build e deploy automaticamente
 
@@ -256,16 +252,16 @@ docker run -p 3000:3000 \
   auth-api
 ```
 
-## 🔒 Segurança
+## Segurança
 
-- ✅ Senhas armazenadas com hash bcrypt (10 rounds de salt)
-- ✅ Tokens JWT com expiração configurável
-- ✅ Validação de dados de entrada
-- ✅ Senha não retornada em queries por padrão
-- ✅ Tratamento de erros sem expor informações sensíveis
-- ✅ CORS habilitado
+- Senhas armazenadas com hash bcrypt (10 rounds de salt)
+- Tokens JWT com expiração configurável
+- Validação de dados de entrada
+- Senha não retornada em queries por padrão
+- Tratamento de erros sem expor informações sensíveis
+- CORS habilitado
 
-## 📝 Validações Implementadas
+## Validações Implementadas
 
 ### Registro
 - Nome: mínimo 2 caracteres, obrigatório
@@ -283,17 +279,17 @@ docker run -p 3000:3000 \
 - Token ausente/inválido (401 Unauthorized)
 - Requisição mal formatada (400 Bad Request)
 
-## 🐛 Logs
+## Logs
 
 A aplicação registra logs detalhados:
 
-- ✅ Conexão com MongoDB
-- ✅ Requisições HTTP (método e path)
-- ✅ Operações de registro e login
-- ✅ Validação de tokens
-- ✅ Erros e exceções
+- Conexão com MongoDB
+- Requisições HTTP (método e path)
+- Operações de registro e login
+- Validação de tokens
+- Erros e exceções
 
-## 📚 Scripts Disponíveis
+## Scripts Disponíveis
 
 ```bash
 npm run dev          # Desenvolvimento com hot-reload
@@ -302,23 +298,3 @@ npm start            # Executa versão compilada
 npm run docker:dev   # Inicia com Docker Compose
 npm run docker:build # Rebuild dos containers Docker
 ```
-
-## 🤝 Contribuindo
-
-1. Fork o projeto
-2. Crie uma branch para sua feature (`git checkout -b feature/MinhaFeature`)
-3. Commit suas mudanças (`git commit -m 'Add: MinhaFeature'`)
-4. Push para a branch (`git push origin feature/MinhaFeature`)
-5. Abra um Pull Request
-
-## 📄 Licença
-
-Este projeto está sob a licença MIT.
-
-## 👨‍💻 Autor
-
-Desenvolvido como projeto acadêmico de API REST com autenticação JWT.
-
----
-
-**Nota:** Lembre-se de sempre usar variáveis de ambiente seguras em produção e nunca comitar o arquivo `.env` no repositório!
