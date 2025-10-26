@@ -113,7 +113,7 @@ NODE_ENV=development
 ### Rotas Públicas
 
 #### POST /register
-Registra um novo usuário no sistema.
+Registra um novo usuário no sistema. O registro não retorna token JWT; o token é obtido apenas no login.
 
 **Body:**
 ```json
@@ -129,7 +129,6 @@ Registra um novo usuário no sistema.
 {
   "success": true,
   "message": "Usuário registrado com sucesso",
-  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
   "user": {
     "id": "507f1f77bcf86cd799439011",
     "name": "João Silva",

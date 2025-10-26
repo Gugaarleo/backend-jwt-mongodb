@@ -16,7 +16,7 @@ class AuthController {
         return;
       }
 
-      const result = await authService.register({ name, email, password });
+  const result = await authService.register({ name, email, password });
 
       if (!result.success) {
         // Determina o status code apropriado baseado na mensagem
@@ -29,7 +29,9 @@ class AuthController {
         return;
       }
 
-      res.status(201).json(result);
+  // Garantir que o registro NUNCA retorne token
+  const { success, message, user } = result;
+  res.status(201).json({ success, message, user });
     } catch (error) {
       console.error('❌ Erro no controller de registro:', error);
       res.status(500).json({
